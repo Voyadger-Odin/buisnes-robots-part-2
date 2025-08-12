@@ -6,11 +6,9 @@ import { CardProps } from '@/features/card/types/types';
 
 export const CardBody = ({
   cardData,
-  edit,
   onOpenEdit,
 }: {
   cardData: CardProps;
-  edit: boolean;
   onOpenEdit?: MouseEventHandler<HTMLDivElement> | undefined;
 }) => {
   const textEndRef = useRef(null);
@@ -40,7 +38,7 @@ export const CardBody = ({
         setOverlayText(false);
       }
     }
-  }, [cardData.title, cardData.counter, cardData.imgPosition, edit]);
+  }, [cardData.title, cardData.counter, cardData.imgPosition, cardData.edit]);
 
   return (
     <div
@@ -48,7 +46,7 @@ export const CardBody = ({
         'relative',
         'w-[345px] min-h-[68px] p-4 overflow-hidden',
         'flex gap-2',
-        edit && 'border border-[#229CFD] rounded-[25px]',
+        cardData.edit && 'border border-[#229CFD] rounded-[25px]',
         cardData.imgPosition === 'onlyText' && 'flex-row items-center',
         cardData.imgPosition === 'left' && 'flex-row items-center',
         cardData.imgPosition === 'top' && 'flex-col',
@@ -120,7 +118,7 @@ export const CardBody = ({
         )}
       </div>
 
-      {!edit && (
+      {!cardData.edit && (
         <div
           className={cn(
             'flex flex-col items-center',
