@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICardsStore, TCard } from '@/pages/main/model/types';
+import { ICardsStore, TCard } from '@/features/card/model/types';
 import {
   setCardEdit,
   setCardPosition,
-} from '@/pages/main/model/cards.store/thunks';
+} from '@/features/card/model/cards.store/thunks';
 import { TImgPosition } from '@/features/card';
 
 export const initialState: ICardsStore = {
