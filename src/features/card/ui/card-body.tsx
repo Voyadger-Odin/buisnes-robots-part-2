@@ -38,7 +38,7 @@ export const CardBody = ({
 
   useEffect(() => {
     handleInput(); // Подстроить при монтировании, если есть начальный текст
-  }, [cardData.edit]);
+  }, [cardData.edit, cardData.imgPosition]);
 
   useEffect(() => {
     const textElement = textEndRef.current;
