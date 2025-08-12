@@ -1,22 +1,21 @@
-export const SaveIcon = () => {
+export const ArrowIcon = () => {
   return (
     <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width="12"
+      height="14"
+      viewBox="0 0 12 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect width="24" height="24" rx="12" fill="#DCDCDC" />
       <path
-        d="M12 17.7461L12 7.24609"
+        d="M6 13.1891L6 2.68909"
         stroke="white"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M7 11.2539L12 6.25391L17 11.2539"
+        d="M1 6.6969L6 1.6969L11 6.6969"
         stroke="white"
         strokeWidth="1.5"
         strokeLinecap="round"

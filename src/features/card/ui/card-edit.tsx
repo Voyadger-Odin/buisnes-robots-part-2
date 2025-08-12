@@ -1,6 +1,4 @@
 import { CardProps } from '@/features/card/types/types';
-import { CardBody } from '@/features/card';
-import { useState } from 'react';
 import { cn } from '@/shared/lib/utils';
 import { CloseIcon } from '@/shared/icons/CloseIcon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/shared/ui/popover';
@@ -9,17 +7,19 @@ import { ToggleGroup, ToggleGroupItem } from '@/shared/ui/toggle-group';
 import { OnlyTextIcon } from '@/shared/icons/OnlyTextIcon';
 import { ImgTopIcon } from '@/shared/icons/ImgTopIcon';
 import { ImgLeftIcon } from '@/shared/icons/ImgLeftIcon';
-import { SaveIcon } from '@/shared/icons/SaveIcon';
+import { ArrowIcon } from '@/shared/icons/ArrowIcon';
 
 export const CardEdit = ({
   cardData,
   onImgPositionChange,
   onEditClose,
+  onEditSave,
   children,
 }: {
   cardData: CardProps;
   onImgPositionChange?: (imgPosition: string) => void;
   onEditClose: () => void;
+  onEditSave: () => void;
   children: React.ReactNode;
 }) => {
   return (
@@ -37,7 +37,7 @@ export const CardEdit = ({
 
           <div className={'flex-1'} />
 
-          <div className={'flex flex-row gap-6'}>
+          <div className={'flex flex-row gap-6 items-center max-h-[24px]'}>
             <Popover>
               <PopoverTrigger asChild>
                 <div
@@ -61,23 +61,42 @@ export const CardEdit = ({
                   value={cardData.imgPosition}
                   onValueChange={onImgPositionChange}
                 >
-                  <ToggleGroupItem value="onlyText" className={'w-12 h-12'}>
-                    <OnlyTextIcon />
+                  <ToggleGroupItem value="onlyText" className={'w-12 h-12 p-0'}>
+                    <OnlyTextIcon className={'min-w-[22px] min-h-[14px]'} />
                   </ToggleGroupItem>
-                  <ToggleGroupItem value="bottom" className={'w-12 h-12'}>
-                    <ImgBottomIcon />
+                  <ToggleGroupItem value="bottom" className={'w-12 h-12 p-0'}>
+                    <ImgBottomIcon className={'min-w-[22px] min-h-[22px]'} />
                   </ToggleGroupItem>
-                  <ToggleGroupItem value="top" className={'w-12 h-12'}>
-                    <ImgTopIcon />
+                  <ToggleGroupItem value="top" className={'w-12 h-12 p-0'}>
+                    <ImgTopIcon className={'min-w-[22px] min-h-[22px]'} />
                   </ToggleGroupItem>
-                  <ToggleGroupItem value="left" className={'w-12 h-12'}>
-                    <ImgLeftIcon />
+                  <ToggleGroupItem value="left" className={'w-12 h-12 p-0'}>
+                    <ImgLeftIcon className={'min-w-[32px] min-h-[12px]'} />
                   </ToggleGroupItem>
                 </ToggleGroup>
               </PopoverContent>
             </Popover>
 
-            <SaveIcon />
+            {cardData.title ? (
+              <div
+                className={cn(
+                  'w-6 h-6 flex items-center justify-center rounded-full cursor-pointer',
+                  'bg-linear-to-tr from-[#068DFB] to-[#3FCCFF] bg-liner-[90]',
+                  'drop-shadow-[0_0_5px_#149DFF36]',
+                )}
+                onClick={onEditSave}
+              >
+                <ArrowIcon />
+              </div>
+            ) : (
+              <div
+                className={
+                  'w-6 h-6 flex items-center justify-center rounded-full bg-[#DCDCDC]'
+                }
+              >
+                <ArrowIcon />
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICardsStore, TCard } from '@/features/card/model/types';
-import {
-  setCardEdit,
-  setCardPosition,
-} from '@/features/card/model/cards.store/thunks';
+import { ICardsStore } from '@/features/card/model/types';
 import { TImgPosition } from '@/features/card';
 
 export const initialState: ICardsStore = {
@@ -85,19 +81,13 @@ export const initialState: ICardsStore = {
       counter: 10,
     },
   ],
+  cardsEdit: [],
 };
 
 export const cardsSlice = createSlice({
   name: 'cards',
   initialState,
   reducers: {
-    addCard: (state, action: PayloadAction<TCard>) => {
-      if (!state.cards) {
-        state.cards = [];
-      }
-
-      state.cards = [...state.cards, action.payload];
-    },
     setCardPosition: (
       state,
       action: PayloadAction<{ cardId: number; imgPosition: TImgPosition }>,
@@ -121,6 +111,9 @@ export const cardsSlice = createSlice({
       if (!state.cards) {
         state.cards = [];
       }
+      if (!state.cardsEdit) {
+        state.cardsEdit = [];
+      }
 
       const index = state.cards.findIndex(
         (item) => item.id === action.payload.cardId,
@@ -128,6 +121,68 @@ export const cardsSlice = createSlice({
 
       if (typeof index === 'number') {
         state.cards[index].edit = action.payload.edit;
+
+        if (action.payload.edit) {
+          state.cardsEdit?.push({
+            ...state.cards[index],
+          });
+        } else {
+          state.cardsEdit = state.cardsEdit.filter(
+            (card) => card.id !== action.payload.cardId,
+          );
+        }
+      }
+    },
+    setCardRollback: (state, action: PayloadAction<{ cardId: number }>) => {
+      if (!state.cards) {
+        state.cards = [];
+      }
+      if (!state.cardsEdit) {
+        state.cardsEdit = [];
+      }
+
+      const index = state.cards.findIndex(
+        (item) => item.id === action.payload.cardId,
+      );
+
+      const indexSave = state.cardsEdit.findIndex(
+        (item) => item.id === action.payload.cardId,
+      );
+
+      if (typeof index === 'number' && typeof indexSave === 'number') {
+        state.cards[index] = state.cardsEdit[indexSave];
+      }
+    },
+    setCardTitle: (
+      state,
+      action: PayloadAction<{ cardId: number; title: string }>,
+    ) => {
+      if (!state.cards) {
+        state.cards = [];
+      }
+
+      const index = state.cards.findIndex(
+        (item) => item.id === action.payload.cardId,
+      );
+
+      if (typeof index === 'number') {
+        state.cards[index].title = action.payload.title;
+      }
+    },
+    setCardCounter: (
+      state,
+      action: PayloadAction<{ cardId: number; counter: string }>,
+    ) => {
+      if (!state.cards) {
+        state.cards = [];
+      }
+
+      const index = state.cards.findIndex(
+        (item) => item.id === action.payload.cardId,
+      );
+
+      if (typeof index === 'number') {
+        state.cards[index].counter = action.payload.counter;
       }
     },
   },

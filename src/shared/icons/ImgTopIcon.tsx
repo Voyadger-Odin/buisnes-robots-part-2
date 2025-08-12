@@ -1,4 +1,4 @@
-export const ImgTopIcon = () => {
+export const ImgTopIcon = ({ className }: { className?: string }) => {
   return (
     <svg
       width="22"
@@ -6,6 +6,7 @@ export const ImgTopIcon = () => {
       viewBox="0 0 22 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <rect width="22" height="10" rx="2" fill="#6E6E6E" />
       <rect y="13.2" width="22" height="2.6" rx="1.3" fill="#A7A7A7" />
