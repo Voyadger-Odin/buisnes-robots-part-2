@@ -1,6 +1,6 @@
 'use client';
 
-import MainPage from '@/pages/main/ui/main-page';
+import { MainPage } from '../views/main';
 
 export default function Home() {
   return (

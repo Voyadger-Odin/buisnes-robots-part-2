@@ -3,9 +3,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { CardEdit, CardBody, TImgPosition } from '@/features/card';
 import { useAppDispatch, useAppSelector } from '@/shared/lib/redux';
-import { cardsStore } from '@/pages/main/model/cards.store';
+import { cardsStore } from '@/features/card/model/cards.store';
 
-export default function MainPage() {
+export const MainPage = () => {
   const dispatch = useAppDispatch();
 
   const cards = useAppSelector(cardsStore.selectors.cardsBaseSelector);
@@ -190,4 +190,4 @@ export default function MainPage() {
       </div>
     </div>
   );
-}
+};

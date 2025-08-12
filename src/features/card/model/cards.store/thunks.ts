@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { cardsSlice } from '@/pages/main/model/cards.store/slice';
+import { cardsSlice } from '@/features/card/model/cards.store/slice';
 import { TImgPosition } from '@/features/card';
 
 export const getCards = createAsyncThunk(
