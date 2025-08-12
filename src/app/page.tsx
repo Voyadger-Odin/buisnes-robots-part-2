@@ -4,7 +4,7 @@ import { Card } from '@/widgets/card';
 import { ChangeEvent, useState } from 'react';
 
 export default function Home() {
-  const [text, setText] = useState('Some text');
+  const [text, setText] = useState('BuisnesRobots part 2');
   const [counter, setCounter] = useState<number | string>('');
 
   const handleInputText = (event: ChangeEvent<HTMLInputElement>) => {
