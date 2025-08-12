@@ -1,7 +1,7 @@
 'use client';
 
-import { ChangeEvent, useEffect, useState } from 'react';
-import { CardEdit, CardBody, TImgPosition } from '@/features/card';
+import { useEffect, useState } from 'react';
+import { CardBody, CardEdit, TImgPosition } from '@/features/card';
 import { useAppDispatch, useAppSelector } from '@/shared/lib/redux';
 import { cardsStore } from '@/features/card/model/cards.store';
 
