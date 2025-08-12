@@ -97,7 +97,6 @@ export default function MainPage() {
 
                           handleEditOpen(cards.cards[value].id, true);
                         }}
-                        edit={!!cards.cards[value].edit}
                       />
                     </CardEdit>
                   )
@@ -139,7 +138,6 @@ export default function MainPage() {
 
                           handleEditOpen(cards.cards[value].id, true);
                         }}
-                        edit={!!cards.cards[value].edit}
                       />
                     </CardEdit>
                   )
@@ -181,7 +179,6 @@ export default function MainPage() {
 
                           handleEditOpen(cards.cards[value].id, true);
                         }}
-                        edit={!!cards.cards[value].edit}
                       />
                     </CardEdit>
                   )

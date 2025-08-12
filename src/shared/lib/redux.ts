@@ -1,4 +1,5 @@
-// store/store.ts
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { combineReducers, configureStore, Slice } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 
