@@ -1,4 +1,4 @@
-export const ImgLeftIcon = () => {
+export const ImgLeftIcon = ({ className }: { className?: string }) => {
   return (
     <svg
       width="36"
@@ -6,6 +6,7 @@ export const ImgLeftIcon = () => {
       viewBox="0 0 36 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <rect width="12" height="12" rx="2" fill="#6E6E6E" />
       <rect

@@ -1,4 +1,4 @@
-export const ImgBottomIcon = () => {
+export const ImgBottomIcon = ({ className }: { className?: string }) => {
   return (
     <svg
       width="12"
@@ -6,6 +6,7 @@ export const ImgBottomIcon = () => {
       viewBox="0 0 12 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <rect
         x="0.5"

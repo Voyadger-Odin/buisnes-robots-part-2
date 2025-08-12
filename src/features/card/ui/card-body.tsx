@@ -3,17 +3,42 @@ import { MenuIcon } from '@/shared/icons/MenuIcon';
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { CardProps } from '@/features/card/types/types';
+import { ImgIcon } from '@/shared/icons/ImgIcon';
 
 export const CardBody = ({
   cardData,
   onOpenEdit,
+  onInputTitle,
 }: {
   cardData: CardProps;
   onOpenEdit?: MouseEventHandler<HTMLDivElement> | undefined;
+  onInputTitle: (title: string) => void;
 }) => {
   const textEndRef = useRef(null);
   const countRef = useRef(null);
   const [overlayText, setOverlayText] = useState(false);
+
+  const textareaRef = useRef(null);
+
+  const handleInput = () => {
+    const el = textareaRef.current;
+    if (el) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      el.style.height = 'auto';
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      el.style.height = el.scrollHeight + 'px';
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      onInputTitle(el.value);
+    }
+  };
+
+  useEffect(() => {
+    handleInput(); // Подстроить при монтировании, если есть начальный текст
+  }, [cardData.edit]);
 
   useEffect(() => {
     const textElement = textEndRef.current;
@@ -53,9 +78,10 @@ export const CardBody = ({
         cardData.imgPosition === 'bottom' && 'flex-col-reverse',
       )}
     >
-      {cardData.img && cardData.imgPosition !== 'onlyText' && (
+      {cardData.imgPosition !== 'onlyText' && (
         <div
           className={cn(
+            cardData.imgPosition === 'left' && 'h-full',
             (cardData.imgPosition === 'top' ||
               cardData.imgPosition === 'bottom') &&
               'h-[calc(180px-16px)]',
@@ -69,7 +95,7 @@ export const CardBody = ({
               cardData.imgPosition === 'top' &&
                 'w-full h-[180px] absolute top-0 left-0 p-px',
               cardData.imgPosition === 'bottom' &&
-                'w-full h-[calc(180px-16px)] absolute bottom-0 left-0 p-px',
+                'w-full h-[180px] absolute bottom-0 left-0 p-px',
             )}
           >
             <div
@@ -83,14 +109,29 @@ export const CardBody = ({
                   'w-full h-full rounded-b-[24px] rounded-t-[5px]',
               )}
             >
-              <Image
-                src={cardData.img}
-                alt={'123'}
-                width={1000}
-                height={1000}
-                quality={90}
-                className={cn('object-cover')}
-              />
+              {cardData.img ? (
+                <Image
+                  src={cardData.img}
+                  alt={'123'}
+                  width={1000}
+                  height={1000}
+                  quality={90}
+                  className={cn('object-cover')}
+                />
+              ) : (
+                <div
+                  className={
+                    'bg-[#F1F6FD] h-full flex items-center justify-center'
+                  }
+                >
+                  <ImgIcon
+                    className={cn(
+                      'w-[121px] h-[77px]',
+                      cardData.imgPosition === 'left' && 'w-[41px] h-[24px]',
+                    )}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -100,20 +141,33 @@ export const CardBody = ({
           'flex-1 break-all text-[#3B4552] font-[Urbanist] tracking-[0px] font-normal text-[14px] leading-[140%]'
         }
       >
-        {cardData.title ? (
-          <span>{cardData.title}</span>
-        ) : (
-          <span className={'text-gray-400'}>Some text</span>
-        )}
-
-        {cardData.counter && (
+        {cardData.edit ? (
           <>
-            <span ref={textEndRef} className={'opacity-0 w-[100px]'}>
-              1
-            </span>
-            <span className={'opacity-0 px-3'}>
-              {overlayText ? cardData.counter : ''}
-            </span>
+            <textarea
+              ref={textareaRef}
+              value={cardData.title}
+              onInput={handleInput}
+              className={cn('w-full min-h-[20px] resize-none')}
+            />
+          </>
+        ) : (
+          <>
+            {cardData.title ? (
+              <span>{cardData.title}</span>
+            ) : (
+              <span className={'text-gray-400'}>Some text</span>
+            )}
+
+            {cardData.counter && (
+              <>
+                <span ref={textEndRef} className={'opacity-0 w-[100px]'}>
+                  1
+                </span>
+                <span className={'opacity-0 px-3'}>
+                  {overlayText ? cardData.counter : ''}
+                </span>
+              </>
+            )}
           </>
         )}
       </div>
@@ -152,14 +206,16 @@ export const CardBody = ({
                 `${cardData.counter}`.length > 1 && 'px-[8px]',
                 cardData.imgPosition === 'bottom' &&
                   'bg-[#3F3F3F66] border-none backdrop-blur-md text-white',
-                typeof cardData.counter === 'number' &&
-                  'border-[0.5px] border-[#B4B4B488] rounded-full',
-                typeof cardData.counter === 'string' &&
-                  cn(
-                    'border-none rounded-full text-white',
-                    'bg-linear-to-tr from-[#068DFB] to-[#3FCCFF] bg-liner-[90]',
-                    'drop-shadow-[0_0_5px_#149DFF36]',
-                  ),
+
+                Number(cardData.counter) &&
+                  `${cardData.counter}`.length > 0 &&
+                  `${cardData.counter}`[0] != '+'
+                  ? 'border-[0.5px] border-[#B4B4B488] rounded-full'
+                  : cn(
+                      'border-none rounded-full text-white',
+                      'bg-linear-to-tr from-[#068DFB] to-[#3FCCFF] bg-liner-[90]',
+                      'drop-shadow-[0_0_5px_#149DFF36]',
+                    ),
               )}
             >
               {cardData.counter}

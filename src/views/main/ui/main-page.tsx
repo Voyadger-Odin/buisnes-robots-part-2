@@ -12,23 +12,19 @@ export const MainPage = () => {
 
   const [counter, setCounter] = useState<number | string>('');
 
-  const handleInputCounter = (event: ChangeEvent<HTMLInputElement>) => {
-    if (
-      Number(event.target.value) &&
-      event.target.value.length > 0 &&
-      event.target.value[0] != '+'
-    ) {
-      setCounter(Number(event.target.value));
-    } else {
-      setCounter(event.target.value);
-    }
-  };
-
   const handleEditOpen = (cardId: number, open: boolean) => {
     dispatch(
       cardsStore.thunks.setCardEdit({
         cardId: cardId,
         edit: open,
+      }),
+    );
+  };
+
+  const handleCardRollback = (cardId: number) => {
+    dispatch(
+      cardsStore.thunks.setCardRollback({
+        cardId: cardId,
       }),
     );
   };
@@ -45,6 +41,25 @@ export const MainPage = () => {
     );
   };
 
+  const handleInputTitle = (cardId: number, title: string) => {
+    dispatch(
+      cardsStore.thunks.setCardTitle({
+        cardId: cardId,
+        title: title,
+      }),
+    );
+  };
+
+  const handleCounter = (value: string) => {
+    setCounter(value);
+    dispatch(
+      cardsStore.thunks.setCardCounter({
+        cardId: 1,
+        counter: value,
+      }),
+    );
+  };
+
   useEffect(() => {
     // dispatch(cardsStore.thunks.getCards());
   }, [dispatch]);
@@ -55,7 +70,9 @@ export const MainPage = () => {
         <div className={'flex flex-row gap-4'}>
           <input
             value={counter}
-            onChange={handleInputCounter}
+            onChange={(event) => {
+              handleCounter(event.target.value);
+            }}
             placeholder={'Counter'}
             className={'shadow h-[48px] p-4 rounded-2xl'}
           />
@@ -85,6 +102,14 @@ export const MainPage = () => {
                           return;
                         }
 
+                        handleCardRollback(cards.cards[value].id);
+                        handleEditOpen(cards.cards[value].id, false);
+                      }}
+                      onEditSave={() => {
+                        if (!cards.cards) {
+                          return;
+                        }
+
                         handleEditOpen(cards.cards[value].id, false);
                       }}
                     >
@@ -96,6 +121,13 @@ export const MainPage = () => {
                           }
 
                           handleEditOpen(cards.cards[value].id, true);
+                        }}
+                        onInputTitle={(title) => {
+                          if (!cards.cards) {
+                            return;
+                          }
+
+                          handleInputTitle(cards.cards[value].id, title);
                         }}
                       />
                     </CardEdit>
@@ -126,6 +158,14 @@ export const MainPage = () => {
                           return;
                         }
 
+                        handleCardRollback(cards.cards[value].id);
+                        handleEditOpen(cards.cards[value].id, false);
+                      }}
+                      onEditSave={() => {
+                        if (!cards.cards) {
+                          return;
+                        }
+
                         handleEditOpen(cards.cards[value].id, false);
                       }}
                     >
@@ -137,6 +177,13 @@ export const MainPage = () => {
                           }
 
                           handleEditOpen(cards.cards[value].id, true);
+                        }}
+                        onInputTitle={(title) => {
+                          if (!cards.cards) {
+                            return;
+                          }
+
+                          handleInputTitle(cards.cards[value].id, title);
                         }}
                       />
                     </CardEdit>
@@ -167,6 +214,14 @@ export const MainPage = () => {
                           return;
                         }
 
+                        handleCardRollback(cards.cards[value].id);
+                        handleEditOpen(cards.cards[value].id, false);
+                      }}
+                      onEditSave={() => {
+                        if (!cards.cards) {
+                          return;
+                        }
+
                         handleEditOpen(cards.cards[value].id, false);
                       }}
                     >
@@ -178,6 +233,13 @@ export const MainPage = () => {
                           }
 
                           handleEditOpen(cards.cards[value].id, true);
+                        }}
+                        onInputTitle={(title) => {
+                          if (!cards.cards) {
+                            return;
+                          }
+
+                          handleInputTitle(cards.cards[value].id, title);
                         }}
                       />
                     </CardEdit>

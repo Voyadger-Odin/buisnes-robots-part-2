@@ -1,4 +1,4 @@
-export const OnlyTextIcon = () => {
+export const OnlyTextIcon = ({ className }: { className?: string }) => {
   return (
     <svg
       width="22"
@@ -6,6 +6,7 @@ export const OnlyTextIcon = () => {
       viewBox="0 0 22 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <rect width="22" height="2.6" rx="1.3" fill="#A7A7A7" />
       <rect y="5.79999" width="22" height="2.6" rx="1.3" fill="#A7A7A7" />
