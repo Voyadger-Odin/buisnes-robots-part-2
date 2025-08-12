@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
 import { Urbanist } from 'next/font/google';
+import { AppProvider } from '@/app/_providers /app-provider';
 
 const urbanistSans = Urbanist({
   variable: '--font-urbanist-sans',
@@ -34,7 +35,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${urbanistSans.variable} antialiased`}
       >
-        {children}
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );
