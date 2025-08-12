@@ -26,9 +26,12 @@ export const CardBody = ({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       el.style.height = 'auto';
+
+      // console.log(el.scrollHeight);
+
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      el.style.height = el.scrollHeight + 'px';
+      el.style.height = `${el.scrollHeight}px`;
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
@@ -71,6 +74,7 @@ export const CardBody = ({
         'relative',
         'w-[345px] min-h-[68px] p-4 overflow-hidden',
         'flex gap-2',
+        'border-[1px] border-[#0000]',
         cardData.edit && 'border border-[#229CFD] rounded-[25px]',
         cardData.imgPosition === 'onlyText' && 'flex-row items-center',
         cardData.imgPosition === 'left' && 'flex-row items-center',
@@ -136,40 +140,49 @@ export const CardBody = ({
           </div>
         </div>
       )}
-      <div
-        className={
-          'flex-1 break-all text-[#3B4552] font-[Urbanist] tracking-[0px] font-normal text-[14px] leading-[140%]'
-        }
-      >
-        {cardData.edit ? (
-          <>
-            <textarea
-              ref={textareaRef}
-              value={cardData.title}
-              onInput={handleInput}
-              className={cn('w-full min-h-[20px] resize-none')}
-            />
-          </>
-        ) : (
-          <>
-            {cardData.title ? (
-              <span>{cardData.title}</span>
-            ) : (
-              <span className={'text-gray-400'}>Some text</span>
-            )}
 
-            {cardData.counter && (
-              <>
-                <span ref={textEndRef} className={'opacity-0 w-[100px]'}>
-                  1
-                </span>
-                <span className={'opacity-0 px-3'}>
-                  {overlayText ? cardData.counter : ''}
-                </span>
-              </>
-            )}
-          </>
-        )}
+      <div className={'flex-1 break-all'}>
+        <div
+          className={
+            'w-full min-w-full max-w-full whitespace-break-spaces break-words text-[#3B4552] font-[Urbanist] tracking-[0px] font-normal text-[14px] leading-[140%]'
+          }
+        >
+          {cardData.edit ? (
+            <>
+              <textarea
+                ref={textareaRef}
+                value={cardData.title}
+                onInput={handleInput}
+                placeholder={'Write your idea!'}
+                rows={1}
+                className={cn(
+                  'w-full min-h-[16px] resize-none overflow-y-auto max-h-52',
+                  'text-[#3B4552] font-[Urbanist] tracking-[0px] font-normal text-[14px] leading-[140%]',
+                  'outline-none',
+                )}
+              />
+            </>
+          ) : (
+            <>
+              {cardData.title ? (
+                <span>{cardData.title}</span>
+              ) : (
+                <span className={'text-gray-400'}>Some text</span>
+              )}
+
+              {cardData.counter && (
+                <>
+                  <span ref={textEndRef} className={'opacity-0 w-[100px]'}>
+                    1
+                  </span>
+                  <span className={'opacity-0 px-3'}>
+                    {overlayText ? cardData.counter : ''}
+                  </span>
+                </>
+              )}
+            </>
+          )}
+        </div>
       </div>
 
       {!cardData.edit && (
